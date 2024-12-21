@@ -1,0 +1,286 @@
+openapi: 3.0.0
+components:
+  schemas:
+    CreateExampleRequest:
+      title: CreateRequest
+      required:
+        - nombre
+        - altura
+        - masa
+        - color_del_cabello
+        - color_de_piel
+        - color_de_ojos
+        - fecha_de_nacimiento
+        - genero
+        - planeta_natal
+        - peliculas
+        - especies
+        - vehiculos
+        - naves_estelares
+        - url
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: 'Yoda'
+        altura:
+          type: string
+          example: '66'
+        masa:
+          type: string
+          example: '17'
+        color_del_cabello:
+          type: string
+          example: 'grey'
+        color_de_piel:
+          type: string
+          example: 'green'
+        color_de_ojos:
+          type: string
+          example: 'yellow'
+        fecha_de_nacimiento:
+          type: string
+          example: '896BBY'
+        genero:
+          type: string
+          example: 'male'
+        planeta_natal:
+          type: string
+          example: 'https://swapi.py4e.com/api/planets/20/'
+        peliculas:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/films/1/'
+        especies:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/species/5/'
+        vehiculos:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/vehicles/44/'
+        naves_estelares:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/starships/51/'
+        url:
+          type: string
+          example: 'https://swapi.py4e.com/api/people/20/'
+
+    CreateExampleResponse:
+      title: CreateResponse
+      type: object
+      properties:
+        nombre:
+          type: string
+          example: 'Yoda'
+        altura:
+          type: string
+          example: '66'
+        masa:
+          type: string
+          example: '17'
+        color_del_cabello:
+          type: string
+          example: 'grey'
+        color_de_piel:
+          type: string
+          example: 'green'
+        color_de_ojos:
+          type: string
+          example: 'yellow'
+        fecha_de_nacimiento:
+          type: string
+          example: '896BBY'
+        genero:
+          type: string
+          example: 'male'
+        planeta_natal:
+          type: string
+          example: 'https://swapi.py4e.com/api/planets/20/'
+        peliculas:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/films/1/'
+        especies:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/species/5/'
+        vehiculos:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/vehicles/44/'
+        naves_estelares:
+          type: array
+          items:
+            type: string
+            example: 'https://swapi.py4e.com/api/starships/51/'
+        creado:
+          type: string
+          example: '2023-12-08T16:20:14.988Z'
+        editado:
+          type: string
+          example: '2023-12-08T16:20:14.988Z'
+        url:
+          type: string
+          example: 'https://swapi.py4e.com/api/people/20/'
+    CreateExampleErrorResponse400:
+      title: CreateExampleErrorResponse400
+      type: object
+      properties:
+        object:
+          type: string
+          example: 'error'
+        type:
+          type: string
+          example: 'parameter_error'
+        message:
+          type: string
+          example: 'El valor nombre tiene un formato inválido'
+        param:
+          type: string
+          example: 'nombre'
+    CreateExampleErrorResponse500:
+      title: CreateExampleErrorResponse500
+      type: object
+      properties:
+        object:
+          type: string
+          example: 'error'
+        type:
+          type: string
+          example: 'apir'
+        message:
+          type: string
+          example: 'error interno'
+
+info:
+  title: fn-starwars-peoples
+  description: Crea y consume data de una base de datos o de SWAPI.
+  version: 1.0.0
+  termsOfService: 'https://culqi.com/terminos_y_condiciones'
+servers:
+  - url: https://ktrp0zo4sa.execute-api.us-west-2.amazonaws.com
+  - url: http://localhost:3000
+paths:
+  /api/v1/people:
+    post:
+      operationId: Crea nuevo registro "PEOPLE"
+      summary: Crea nuevo registro "PEOPLE"
+      description: Crea nuevo registro "PEOPLE"
+      tags:
+        - Endpoints públicos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateExampleRequest'
+            example:
+              name: 'Yoda'
+              height: '66'
+              mass: '17'
+              hair_color: 'grey'
+              skin_color: 'green'
+              eye_color: 'yellow'
+              birth_year: '896BBY'
+              gender: 'male'
+              homeworld: 'https://swapi.py4e.com/api/planets/20/'
+              films:
+                - 'https://swapi.py4e.com/api/films/1/'
+                - 'https://swapi.py4e.com/api/films/2/'
+                - 'https://swapi.py4e.com/api/films/3/'
+              species:
+                - 'https://swapi.py4e.com/api/species/5/'
+              vehicles:
+                - 'https://swapi.py4e.com/api/vehicles/44/'
+              starships:
+                - 'https://swapi.py4e.com/api/starships/51/'
+              url: 'https://swapi.py4e.com/api/people/20/'
+      responses:
+        '201':
+          description: Respuesta cuando se crear un registro correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExampleResponse'
+        '400':
+          description: Error cuando el nombre no es válido o no existe
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    example: 'error'
+                  type:
+                    type: string
+                    example: 'parameter_error'
+                  merchant_message:
+                    type: string
+                    example: "El parámetro nombre es inválido. La longitud debe ser de '25' caracteres."
+                  param:
+                    type: string
+                    example: 'nombre'
+        '500':
+          description: Es un error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExampleErrorResponse500'
+
+    get:
+      operationId: Obtiene los registros "PEOPLE" mediante el nombre
+      summary: Obtiene los registros "PEOPLE" mediante el nombre
+      description: Busca en la base de datos si se encuentra el registro, en caso contrario, va a buscar al API de SWAPI
+      tags:
+        - Endpoints públicos
+      parameters:
+        - name: name
+          in: query
+          description: El nombre es necesario, ya que se buscará mediante este parámetro
+          required: true
+          example: 'Yoda'
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta cuando se obtienen registros correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreateExampleResponse'
+        '400':
+          description: Error cuando el nombre no es válido o no existe
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  object:
+                    type: string
+                    example: 'error'
+                  type:
+                    type: string
+                    example: 'parameter_error'
+                  merchant_message:
+                    type: string
+                    example: "El parámetro nombre es inválido. La longitud debe ser de '25' caracteres."
+                  param:
+                    type: string
+                    example: 'nombre'
+        '500':
+          description: Error interno
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateExampleErrorResponse500'

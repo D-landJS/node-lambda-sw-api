@@ -1,0 +1,50 @@
+service: star-wars-api
+frameworkVersion: '3'
+
+package:
+  individually: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  profile: default
+  region: us-west-2
+
+functions:
+  get:
+    handler: src/index.handlerGet
+    package:
+      patterns:
+        - 'config/.env*'
+    environment:
+      APP_ENV: local
+    events:
+      - httpApi:
+          path: /api/v1/people
+          method: get
+  create:
+    handler: src/index.handlerCreate
+    package:
+      patterns:
+        - 'config/.env*'
+    environment:
+      APP_ENV: local
+    events:
+      - httpApi:
+          path: /api/v1/people
+          method: post
+
+custom:
+  esbuild:
+    concurrency: 10
+    format: 'esm'
+    outputFileExtension: '.mjs'
+    platform: 'node'
+    target: 'esnext'
+    keepNames: ${strToBool(${env:ESBUILD_KEEPNAMES, true})}
+    minify: true
+    banner:
+      js: import { createRequire } from 'module';const require = createRequire(import.meta.url);
+plugins:
+  - serverless-esbuild
+  - serverless-offline
